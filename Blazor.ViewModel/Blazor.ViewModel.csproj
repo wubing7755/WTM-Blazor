@@ -8,6 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Blazor.Model\Blazor.Model.csproj" />
-  </ItemGroup >
+  </ItemGroup>
 </Project>
 
