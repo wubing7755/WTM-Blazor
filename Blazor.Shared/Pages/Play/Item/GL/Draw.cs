@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.JSInterop;
 using WtmBlazorUtils;
@@ -7,29 +8,27 @@ namespace Blazor.Shared.Pages.Play.Item.GL;
 
 public class Draw : BasePage
 {
-    private static readonly IJSRuntime _jsRuntime;
-    
-    public static RenderFragment RenderChild()
+    public RenderFragment RenderChild()
     {
         return builder => RenderItem(builder);
     }
 
-    public static void RenderItem(RenderTreeBuilder builder)
+    private void RenderItem(RenderTreeBuilder builder)
     {
         // 最上层div
         builder.OpenElement(0, "div");
         builder.AddAttribute(1, "class", "item");
-        builder.AddContent(2, "This is a canvas.");
         
-        // canvas元素
-        builder.OpenElement(3, "canvas");
-        builder.AddAttribute(4, "id", "webGPUCanvas");
-        builder.AddAttribute(5, "width", "1200");
-        builder.AddAttribute(6, "height", "600");
+        builder.OpenElement(2, "p");
+        builder.AddContent(3, "This is a canvas.");
         builder.CloseElement();
         
-        // 调用JavaScript方法
-        _jsRuntime.InvokeVoidAsync("draw", "webGPUCanvas");
+        // canvas元素
+        builder.OpenElement(4, "canvas");
+        builder.AddAttribute(5, "id", "webGPUCanvas");
+        builder.AddAttribute(6, "width", "1200");
+        builder.AddAttribute(7, "height", "600");
+        builder.CloseElement();
         
         builder.CloseElement();
     }
@@ -38,4 +37,13 @@ public class Draw : BasePage
     {
         
     }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            JSRuntime.InvokeVoidAsync("drawBackGround", "webGPUCanvas");
+        }
+    }
+
 }
