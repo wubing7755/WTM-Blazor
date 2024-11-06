@@ -14,8 +14,6 @@ namespace Blazor.ViewModel.Play
     /// </summary>
     public class PlayerVM: BaseCRUDVM<Player>
     {
-        public Guid Id { get; set; }
-
         // 玩家名
         [Display(Name = "玩家名")]
         [Required(ErrorMessage = "{0}是必填项")]
@@ -33,7 +31,6 @@ namespace Blazor.ViewModel.Play
         {
             if (player != null)
             {
-                Id = player.Id;
                 Name = player.Name;
                 IsValid = player.IsValid;
             }
@@ -48,7 +45,6 @@ namespace Blazor.ViewModel.Play
         {
             return new Player
             {
-                Id = playervm.Id,
                 Name = playervm.Name,
                 IsValid = playervm.IsValid
             };

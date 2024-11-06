@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -63,9 +64,21 @@ namespace Blazor.DataAccess
                 {
                     item.Url = "/_admin" + item.Url;
                 }
-
+                
                 Set<FrameworkUser>().Add(user);
                 Set<FrameworkUserRole>().Add(userrole);
+                
+                FrameworkContext frameworkContext = this;
+                bool rv = await frameworkContext.Database.EnsureCreatedAsync();
+                
+                var player = new Player
+                {
+                    Name = "osystem",
+                    IsValid = false
+                };
+                
+                Set<Player>().Add(player);
+                
                 await SaveChangesAsync();
             }
             return state;

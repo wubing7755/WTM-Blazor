@@ -1,6 +1,9 @@
 @inherits LayoutComponentBase
+@using System.Drawing
 @using System.Reflection
 @using System.Globalization
+@using Color = BootstrapBlazor.Components.Color
+@using Size = BootstrapBlazor.Components.Size
 @inject WtmBlazorContext wtmblazor;
 @inject IJSRuntime JSRuntime;
 
@@ -206,7 +209,13 @@
     {
         List<BootstrapBlazor.Components.MenuItem> menus = null;
         menus = new List<BootstrapBlazor.Components.MenuItem> { };
+        
+        // Play页
+        menus.Add(new BootstrapBlazor.Components.MenuItem(){Text = "Play", Icon="fa fa-fw fa-home", Url="/play", Match = NavLinkMatch.All});
+        
+        // 首页
         menus.Add(new BootstrapBlazor.Components.MenuItem() { Text = wtmblazor.Localizer["Sys.Home"], Icon = "fa fa-fw fa-home", Url = "/", Match = NavLinkMatch.All });
+        
         if (wtmblazor.ConfigInfo.IsQuickDebug == true)
         {
             var pages = wtmblazor.GetAllPages();

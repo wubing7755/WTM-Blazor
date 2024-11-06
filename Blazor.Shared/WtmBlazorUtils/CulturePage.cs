@@ -18,6 +18,7 @@ namespace WtmBlazorUtils
         /// </summary>
         [Parameter]
         public EventCallback<TValue> ModelChanged { get; set; }
+        
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
             Type componentTyype = null;
