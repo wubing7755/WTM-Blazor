@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Blazor.Shared.Pages.Play;
+using Blazor.Shared.Pages.Play.Item.GL;
+using Microsoft.Extensions.DependencyInjection;
 using WtmBlazorUtils;
 
 namespace Blazor.Shared.Core.Utils;
@@ -10,7 +12,9 @@ public static class ServicesCollection
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-
+        
+        // services.AddScoped<Draw>();
+        // services.AddScoped<PlayContent>();
         
         return services;
     }

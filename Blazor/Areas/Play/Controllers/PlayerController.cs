@@ -15,7 +15,7 @@ namespace Blazor.Areas.Play.Controllers
         public IActionResult Add(PlayerVM vm)
         {
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 vm.DoAdd();
 

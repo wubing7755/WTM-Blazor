@@ -6,19 +6,15 @@ using WtmBlazorUtils;
 
 namespace Blazor.Shared.Pages.Play;
 
-public class PlayContent:BasePage
+public class PlayContent:ComponentBase
 {
     protected override void BuildRenderTree(RenderTreeBuilder builder)
     {
 
-        Draw draw = new Draw();
-        
         builder.OpenElement(0, "div");
-        builder.AddContent(1, draw.RenderChild());
-        builder.CloseElement();
-        
-        builder.OpenComponent(0, typeof(Draw));
+        builder.OpenComponent<Draw>(1);
         builder.CloseComponent();
+        builder.CloseElement();
         
         base.BuildRenderTree(builder);
     }

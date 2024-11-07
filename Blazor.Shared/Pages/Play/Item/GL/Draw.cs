@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.JSInterop;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
@@ -15,8 +16,22 @@ using WtmBlazorUtils;
 
 namespace Blazor.Shared.Pages.Play.Item.GL;
 
-public class Draw : BasePage
+public class Draw:BasePage
 {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        
+        StateHasChanged();
+    }
+
+    protected override void BuildRenderTree(RenderTreeBuilder builder)
+    {
+        builder.AddContent(0, RenderChild());
+        
+        base.BuildRenderTree(builder);
+    }
+
     public RenderFragment RenderChild()
     {
         return builder => RenderItem(builder);
@@ -45,27 +60,14 @@ public class Draw : BasePage
         builder.AddAttribute(10, "style", "width:60px;height:30px;background-color:yellow;");
         
         // onclick 事件
-        builder.AddAttribute(11, "onclick", EventCallback.Factory.Create(this, AddPlayerInfo));
+        builder.AddAttribute(11, "onclick", EventCallback.Factory.Create(this, async () => await AddPlayerInfo()));
         builder.AddContent(12, "Post请求");
         builder.CloseElement();
         
         builder.CloseElement();
     }
 
-    protected override void BuildRenderTree(RenderTreeBuilder builder)
-    {
-        
-    }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
-        {
-            AddPlayerInfo();
-        }
-    }
-
-    private async void AddPlayerInfo()
+    private async Task AddPlayerInfo()
     {
         string url = "api/PlayerInfo/AddPlayer";
 
@@ -76,7 +78,11 @@ public class Draw : BasePage
             IsValid = false
         };
 
+        var res = await WtmBlazor.Api.CallAPI(url, HttpMethodEnum.POST, player);
 
-        await WtmBlazor.Api.CallAPI(url, HttpMethodEnum.POST, player);
+        if (res.StatusCode == HttpStatusCode.OK)
+        {
+        
+        }
     }
 }
