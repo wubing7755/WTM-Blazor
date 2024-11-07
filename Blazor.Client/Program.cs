@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Threading.Tasks;
+using Blazor.Shared.Core.Utils;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,9 +20,14 @@ namespace Blazor.Client
             builder.Services.AddLocalization(option => option.ResourcesPath = "Resources");
             builder.Services.AddBootstrapBlazor(null, options => { options.ResourceManagerStringLocalizerType = typeof(Shared.Program); });
             builder.Services.AddWtmBlazor(configs, builder.HostEnvironment.BaseAddress);
+            
+            // 添加自定义服务
+            builder.Services.AddServices();  
+            
             var host = builder.Build();
             var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
             var result = await jsInterop.InvokeAsync<string>("localStorageFuncs.get", "wtmculture");
+            
             CultureInfo culture = null;
             if (result == null)
             {

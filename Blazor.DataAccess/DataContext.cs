@@ -92,9 +92,9 @@ namespace Blazor.DataAccess
     /// </summary>
     public class DataContextFactory : IDesignTimeDbContextFactory<DataContext>
     {
-        public DataContext CreateDbContext(string[] args)
+        public DataContext CreateDbContext(string[] args = null)
         {
-            return new DataContext("your full connection string", DBTypeEnum.SqlServer);
+            return new DataContext(@"data source = Database\\Blazor_db.db", DBTypeEnum.SQLite);
         }
     }
 
